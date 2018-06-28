@@ -1,51 +1,55 @@
-import { createElement, ScriptableScene } from 'metaverse-api'
+ import { createElement, ScriptableScene } from "metaverse-api";
 
-const networkHz = 6
-const interval = 1000 / networkHz
+//used for ball starting pos
+const startingpos = {x: 3, y: 4, z: 2 };
+var currentpos = startingpos;
 
-export default class RollerCoaster extends ScriptableScene<any, { time: number }> {
-  state = { time: 0 }
+//physics simulation requires time, velocity, acceleration
+var time = 0;
+var vel = 0;
+var acc = -9.8; // gravity is 9.8m/s^2 in my world.
 
-  timeout = setInterval(() => {
-    this.setState({
-      time: performance.now() * 0.0001
-    })
-  }, interval)
+//when the ball touches the ground
+const ground_height = 0.5;
 
-  sceneWillUnmount() {
-    clearInterval(this.timeout)
-  }
+//why bouncy is the ball? (between 0 and 1 please.) 1 makes it stop when it hits the ground
+const elasticity = 0.5; //ball will lose 1/5 of speed when it hits the ground
 
-  async render() {
-    const { time } = this.state
 
-    const size = 2
+export default class CollisionScene extends ScriptableScene {
 
-    const x = Math.cos(time) * Math.cos(time) * size
-    const y = Math.cos(time) * Math.sin(time) * size
-    const z = Math.sin(time) * size
+    async render() {
+      //called every time the scene refreshes. Must return the scene, almost like html
+      console.log("time + 0.01 = " + time);
+      time += 0.1;
+      var nextpos = currentpos;
 
-    return (
-      <scene>
-        <entity position={{ x: 5, y: 4, z: 5 }}>
-          <entity
-            id="train"
-            position={{ x, y, z }}
-            rotation={{ x: Math.cos(time) * 40, y: Math.sin(time) * 40, z: 0 }}
-            transition={{
-              position: { duration: interval },
-              rotation: { duration: interval }
-            }}
-          >
-            <box position={{ x: 0, y: -1, z: 0 }} color="#000000" scale={{ x: 3, y: 0.4, z: 5 }} />
-            <box position={{ x: 1.5, y: 0, z: 0 }} color="#FF0000" scale={{ x: 0.2, y: 1, z: 5 }} />
-            <box position={{ x: -1.5, y: 0, z: 0 }} color="#FFFF00" scale={{ x: 0.2, y: 1, z: 5 }} />
+      //increment y according to velocity.
+      nextpos.y += time*vel;
 
-            <box position={{ x: 0, y: 0, z: 2.5 }} color="#00FF00" scale={{ x: 3, y: 1, z: 0.2 }} />
-            <box position={{ x: 0, y: 0, z: -2.5 }} color="#0000FF" scale={{ x: 3, y: 1, z: 0.2 }} />
-          </entity>
-        </entity>
-      </scene>
-    )
-  }
+      //increment velocity according to acceleration
+      vel += time*acc;
+
+      //check if the ball has hit the ground and needs to bounce up.
+      if(nextpos.y <= ground_height){
+      console.log("Boom, hit the ground with speed of " + vel);
+      //change direction
+      vel = vel * -1;
+
+      //also lose some energy.
+      vel = vel * (1  - elasticity);
+    }
+
+        return (
+            <scene position={{ x: 5, y: 0, z: 5 }}>
+
+                <box position={{ x: 0, y: 0, z: 0 }} scale={{ x: 10, y: ground_height, z: 10 }} color="blue" />
+
+
+                <sphere position={nextpos} color="#ff00aa" scale={0.75} />
+
+
+            </scene>
+        );
+    }
 }

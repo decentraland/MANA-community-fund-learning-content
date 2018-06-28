@@ -1,5 +1,5 @@
 # Time Scaling
-This is an example showing how to scale objects in relation to time in the scene.  Using time in the scene is important to creating dynamic content and an easy way to may things more interactive & attractive.
+This is an example showing how to create a mini physics simulation in Decentraland. Object positions can be controlled by their velocities, which are controlled by a globally set, and arbitrary acceleration. 
 
 The code to do this is in scene.tsx.  Everything else was mostly generated using `dcl init`.
 
