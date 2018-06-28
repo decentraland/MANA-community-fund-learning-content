@@ -66,20 +66,20 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "../../../../../../tmp/0.02788847951651796.WebWorker.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "../../../../../../tmp/0.8786279240600825.WebWorker.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "../../../../../../tmp/0.02788847951651796.WebWorker.js":
-/*!*********************************************!*\
-  !*** /tmp/0.02788847951651796.WebWorker.js ***!
-  \*********************************************/
+/***/ "../../../../../../tmp/0.8786279240600825.WebWorker.js":
+/*!********************************************!*\
+  !*** /tmp/0.8786279240600825.WebWorker.js ***!
+  \********************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _home_joseph_Desktop_decentraland_MANA_community_fund_learning_content_time_scaling_node_modules_metaverse_rpc_lib_common_transports_WebWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/metaverse-rpc/lib/common/transports/WebWorker */ \"./node_modules/metaverse-rpc/lib/common/transports/WebWorker.js\");\n\n\nconst imported = __webpack_require__(/*! ./scene.tsx */ \"./scene.tsx\")\n\nif (imported && imported.__esModule && imported['default']) {\n  new imported['default'](Object(_home_joseph_Desktop_decentraland_MANA_community_fund_learning_content_time_scaling_node_modules_metaverse_rpc_lib_common_transports_WebWorker__WEBPACK_IMPORTED_MODULE_0__[\"WebWorkerTransport\"])(self))\n}\n\n\n//# sourceURL=webpack:////tmp/0.02788847951651796.WebWorker.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _home_joseph_Desktop_decentraland_MANA_community_fund_learning_content_time_scaling_node_modules_metaverse_rpc_lib_common_transports_WebWorker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/metaverse-rpc/lib/common/transports/WebWorker */ \"./node_modules/metaverse-rpc/lib/common/transports/WebWorker.js\");\n\n\nconst imported = __webpack_require__(/*! ./scene.tsx */ \"./scene.tsx\")\n\nif (imported && imported.__esModule && imported['default']) {\n  new imported['default'](Object(_home_joseph_Desktop_decentraland_MANA_community_fund_learning_content_time_scaling_node_modules_metaverse_rpc_lib_common_transports_WebWorker__WEBPACK_IMPORTED_MODULE_0__[\"WebWorkerTransport\"])(self))\n}\n\n\n//# sourceURL=webpack:////tmp/0.8786279240600825.WebWorker.js?");
 
 /***/ }),
 
@@ -658,7 +658,7 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return RollerCoaster; });\n/* harmony import */ var metaverse_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! metaverse-api */ \"./node_modules/metaverse-api/lib/index.js\");\n/* harmony import */ var metaverse_api__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(metaverse_api__WEBPACK_IMPORTED_MODULE_0__);\n\nconst networkHz = 6;\nconst interval = 1000 / networkHz;\nvar myscaler = 1;\nclass RollerCoaster extends metaverse_api__WEBPACK_IMPORTED_MODULE_0__[\"ScriptableScene\"] {\n    constructor() {\n        super(...arguments);\n        this.state = { time: 0 };\n        this.timeout = setInterval(() => {\n            this.setState({\n                time: performance.now() * 0.0001\n            });\n        }, interval);\n    }\n    sceneWillUnmount() {\n        clearInterval(this.timeout);\n    }\n    async render() {\n        const { time } = this.state;\n        var fastsecs = time * 10;\n        var inc = fastsecs % 5;\n        if (inc < 1.1) {\n            myscaler += 0.2;\n            console.log(\"my scaler incremented to \" + myscaler);\n        }\n        return (Object(metaverse_api__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"])(\"scene\", null,\n            Object(metaverse_api__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"])(\"entity\", { id: \"scaler-obj\" },\n                Object(metaverse_api__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"])(\"box\", { position: { x: 0, y: 0, z: 0 }, scale: { x: myscaler, y: myscaler, z: myscaler }, color: \"blue\" })),\n            Object(metaverse_api__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"])(\"plane\", null)));\n    }\n}\n\n\n//# sourceURL=webpack:///./scene.tsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return RollerCoaster; });\n/* harmony import */ var metaverse_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! metaverse-api */ \"./node_modules/metaverse-api/lib/index.js\");\n/* harmony import */ var metaverse_api__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(metaverse_api__WEBPACK_IMPORTED_MODULE_0__);\n\nconst networkHz = 6;\nconst interval = 1000 / networkHz;\nvar prevtime = 0;\nconst startingpos = { x: 3, y: 6, z: 2 };\nvar currentpos = startingpos;\nvar vel = 0;\nvar acc = -9.8;\nconst ground_height = 0.5;\nconst elasticity = 0.2;\nclass RollerCoaster extends metaverse_api__WEBPACK_IMPORTED_MODULE_0__[\"ScriptableScene\"] {\n    constructor() {\n        super(...arguments);\n        this.state = { time: 0 };\n        this.timeout = setInterval(() => {\n            this.setState({\n                time: performance.now() * 0.0001\n            });\n        }, interval);\n    }\n    sceneWillUnmount() {\n        clearInterval(this.timeout);\n    }\n    async render() {\n        const { time } = this.state;\n        var timestep = time - prevtime;\n        prevtime = time;\n        var nextpos = currentpos;\n        nextpos.y += timestep * vel;\n        vel += timestep * acc;\n        if (nextpos.y <= ground_height) {\n            console.log(\"Boom, hit the ground with speed of \" + vel);\n            vel = vel * -1;\n            vel = vel * (1 - elasticity);\n        }\n        return (Object(metaverse_api__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"])(\"scene\", { position: { x: 5, y: 0, z: 5 } },\n            Object(metaverse_api__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"])(\"box\", { position: { x: 0, y: 0, z: 0 }, scale: { x: 10, y: ground_height, z: 10 }, color: \"blue\" }),\n            Object(metaverse_api__WEBPACK_IMPORTED_MODULE_0__[\"createElement\"])(\"sphere\", { position: nextpos, color: \"#ff00aa\", scale: 0.5 })));\n    }\n}\n\n\n//# sourceURL=webpack:///./scene.tsx?");
 
 /***/ })
 
