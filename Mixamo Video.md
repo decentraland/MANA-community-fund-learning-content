@@ -4,7 +4,7 @@ DL: https://drive.google.com/file/d/1Ac2QqTiWy9FC0Tsogfb5k7PBKHUyrRv1/view?usp=s
 
 Code:
 
-BEGIN
+```
 import { createElement, ScriptableScene } from "metaverse-api";
 
 const MODEL_ID = "dancefriend";
@@ -37,7 +37,7 @@ export default class DanceAnimation extends ScriptableScene {
         );
     }
 }
-END
+```
 
 
 Links:
